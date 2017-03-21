@@ -1,0 +1,8 @@
+.project
+.settings
+target/classes
+target/generated-sources
+target/GeoService-0.0.1-SNAPSHOT
+target/m2e-wtp
+target/maven-archiver
+target/maven-status
