@@ -13,8 +13,11 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>geo</servlet-name>
+    <url-pattern>/result</url-pattern>
     <url-pattern>/result.jsp</url-pattern>
     <url-pattern>/result.html</url-pattern>
+    <url-pattern>/welcome.jsp</url-pattern>
+    <url-pattern>/welcome.html</url-pattern>
     <url-pattern>*.html</url-pattern>
   </servlet-mapping>
 </web-app>
