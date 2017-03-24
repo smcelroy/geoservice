@@ -30,7 +30,7 @@ public class SpatialQuery extends GeoLocation {
         try
         {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            con = DriverManager.getConnection("jdbc:hackthon:@192.168.1.123:1521:hackthon", "SYSTEM", "testing123");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.123:1521:orcl", "SYSTEM", "Testing123");
         }
         catch (Exception e)
         {
@@ -41,22 +41,23 @@ public class SpatialQuery extends GeoLocation {
 
     public void runQuery()
     {
-        //count = SELECT count(*) FROM <spatial_table> WHERE SDO_WITHIN_DISTANCE(<spatial_table.shape>, SDO_GEOMETRY(2001,NULL,SDO_POINT_TYPE(<json.lat>, <json.lon>, NULL),NULL,NULL)), 'distance='+distance+'');
         try
         {
             Statement stmt = con.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT count(*), t.shape.sdo_point.x longitude, t.shape.sdo_point.y latitude " +
-                    "FROM <table> t WHERE SDO_WITHIN_DISTANCE(<table_shape>, " +
-                    "SDO_GEOMETRY(2001, NULL, SDO_POINT_TYPE(" + getLongitude() + ", " + getLatitude() + ", NULL), NULL, NULL), " +
-                    "'distance=" + getDistance() + "') = 'TRUE'");
+            /*ResultSet rs = stmt.executeQuery("SELECT t.SHAPE.sdo_point.x longitude, t.SHAPE.sdo_point.y latitude " +
+                            "FROM hackathon t WHERE SDO_WITHIN_DISTANCE(t.SHAPE, " +
+                    "MDSYS.SDO_GEOMETRY(2001, NULL, SDO_POINT_TYPE(5, 5, NULL),  NULL, NULL), " + "'distance=10') = 'TRUE'");*/
+
+            ResultSet rs = stmt.executeQuery("select count(*) from HELP");
 
             while (rs.next())
             {
                 setCount(rs.getInt(1));
-                results.add(new SpatialResult(rs.getDouble(2), rs.getDouble(3)));
+                //results.add(new SpatialResult(rs.getDouble(2), rs.getDouble(3)));
             }
 
+            System.out.println(getCount());
             con.close();
         }
         catch (Exception e)
